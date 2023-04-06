@@ -8,6 +8,9 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * Update attributes of an object
 * Destroy an object
 
+RESTful API
+Expose all the objects stored via a JSON web interface manipulate the objects via a RESTful API
+
 ## Table of Content
 * [Environment](#environment)
 * [Installation](#installation)
@@ -156,6 +159,8 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Jesse Maikarfi - [Github](https://github.com/MaikarfiJesse)
+Sugira Vincent - [Github](https://github.com/SugiraVinc)
 
 Second part of Airbnb: Joann Vuong
 ## License
