@@ -1,30 +1,116 @@
 #!/usr/bin/python3
-"""
-This module defines a Flask application that serves a RESTful API
-"""
-from flask import Flask, jsonify
+
+"""api for the city view and Python"""
+
+
+
+
+import os
+
 from models import storage
+
 from api.v1.views import app_views
+
+from flask import Flask, jsonify
+
 from flask_cors import CORS
-from os import environ
+
+
+
+
+# from flasgger import Swagger
+
+
+
 
 app = Flask(__name__)
+
+# Swagger(app)  # allow swagger
+
+
+
+
 app.register_blueprint(app_views)
-cors = CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
+
+CORS(app, resources=r"/api/v1/", origins="")
+
+app.url_map.strict_slashes = False  # allow /api/v1/states/ and /api/v1/states
 
 
-@app.teardown_appcontext
-def teardown_app(exception):
-    storage.close()
+
+
+host = os.getenv("HBNB_API_HOST", "0.0.0.0")
+
+port = os.getenv("HBNB_API_PORT", 5000)
+
+
+
+
+
 
 
 @app.errorhandler(404)
-def page_not_found(e):
-    """handler for routes that don't exist"""
+
+def error(self):
+
+    """404 error but return empty dict"""
+
     return jsonify({"error": "Not found"}), 404
 
 
-if __name__ == '__main__':
-    host = environ.get("HBNB_API_HOST", "0.0.0.0")
-    port = environ.get("HBNB_API_PORT", 5000)
-    app.run(host=host, port=port, threaded=True)
+
+
+
+
+
+@app.teardown_appcontext
+
+def teardown(*args, **kwargs):
+
+    """close storage"""
+
+    storage.close()
+
+
+
+
+
+
+
+# allow cross-origin for all routes and methods
+
+
+
+
+
+
+
+@app.after_request  # after request
+
+def after_request(response):
+
+    """allow cross-origin for all routes and methods"""
+
+    response.headers['Access-Control-Allow-Origin'] = '*'
+
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+
+    response.headers['Accept'] = '/'
+
+    return response
+
+
+
+
+
+
+
+if __name__ == "__main__":
+
+    """Flask Boring App"""
+
+    # print(app.url_map)
+
+    app.run(host=host, port=port)
