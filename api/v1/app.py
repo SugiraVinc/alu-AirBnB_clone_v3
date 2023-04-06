@@ -1,116 +1,30 @@
 #!/usr/bin/python3
-
-"""api for the city view and Python"""
-
-
-
-
-import os
-
-from models import storage
-
-from api.v1.views import app_views
-
+"""
+This module defines a Flask application that serves a RESTful API
+"""
 from flask import Flask, jsonify
-
+from models import storage
+from api.v1.views import app_views
 from flask_cors import CORS
-
-
-
-
-# from flasgger import Swagger
-
-
-
+from os import environ
 
 app = Flask(__name__)
-
-# Swagger(app)  # allow swagger
-
-
-
-
 app.register_blueprint(app_views)
-
-CORS(app, resources=r"/api/v1/", origins="")
-
-app.url_map.strict_slashes = False  # allow /api/v1/states/ and /api/v1/states
-
-
-
-
-host = os.getenv("HBNB_API_HOST", "0.0.0.0")
-
-port = os.getenv("HBNB_API_PORT", 5000)
-
-
-
-
-
-
-
-@app.errorhandler(404)
-
-def error(self):
-
-    """404 error but return empty dict"""
-
-    return jsonify({"error": "Not found"}), 404
-
-
-
-
-
+cors = CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-
-def teardown(*args, **kwargs):
-
-    """close storage"""
-
+def teardown_app(exception):
     storage.close()
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    """handler for routes that don't exist"""
+    return jsonify({"error": "Not found"}), 404
 
 
-
-
-
-# allow cross-origin for all routes and methods
-
-
-
-
-
-
-
-@app.after_request  # after request
-
-def after_request(response):
-
-    """allow cross-origin for all routes and methods"""
-
-    response.headers['Access-Control-Allow-Origin'] = '*'
-
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
-
-    response.headers['Accept'] = '/'
-
-    return response
-
-
-
-
-
-
-
-if __name__ == "__main__":
-
-    """Flask Boring App"""
-
-    # print(app.url_map)
-
-    app.run(host=host, port=port)
+if __name__ == '__main__':
+    host = environ.get("HBNB_API_HOST", "0.0.0.0")
+    port = environ.get("HBNB_API_PORT", 5000)
+    app.run(host=host, port=port, threaded=True)
