@@ -2,6 +2,7 @@
 """Create a route on the object app_views that returns a JSON: "status":OK """
 from flask import Flask, jsonify
 from api.v1.views import app_views
+from models import storage, Amenity, City, Place, Review, state, User
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
