@@ -2,7 +2,7 @@
 """
 Create a blueprint
 """
-from os import gatenv
+from os import getenv
 from flask import Blueprint
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
