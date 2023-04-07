@@ -9,7 +9,7 @@ from models.state import State
 
 @app_views.route('/states/<state_id>/cities', strict_slashes=False)
 def get_cities(state_id):
-    """get cities"""
+    """Retrieves the list of all city objects of a state"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -23,7 +23,7 @@ def get_cities(state_id):
 
 @app_views.route('/cities/<city_id>', strict_slashes=False)
 def get_city(city_id):
-    """get a specific city"""
+    """Retrieves a City object"""
     city = storage.get(City, city_id)
     if city is not None:
         return jsonify(city.to_dict())
