@@ -25,4 +25,6 @@ else:
     storage_t = 'fs'
 
 @app.teardown_appcontext
-def close
+def close:
+    """Close method"""
+    self.reload()
