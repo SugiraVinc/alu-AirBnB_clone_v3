@@ -74,7 +74,7 @@ class FileStorage:
         Retreive an object from storage based on its class and ID
         """
         if cls and id_:
-            key = "{}.{}".format(cls._name_, id_)
+            key = "{}.{}".format(cls.__name__, id_)
             all_objects = self.all(cls)
             return all_objects.get(key)
         return None
