@@ -75,7 +75,7 @@ class FileStorage:
         """
         if cls and id_:
             key = "{}.{}".format(cls._name_, id_)
-            all_objects =self.all(cls)
+            all_objects = self.all(cls)
             return all_objects.get(key)
         return None
 
