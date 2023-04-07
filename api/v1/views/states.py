@@ -3,7 +3,7 @@
 """
 Creates a new state object that handles all RESTful API
 """
-from flask import jsonify, request
+from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models import storage, State
 
@@ -11,7 +11,7 @@ from models import storage, State
 @app_views.route('/states', methods=['GET'])
 def get_states():
     """
-    Retrieves the list of all state objects
+    Retrieves the list of all State objects.
     """
     states = [state.to_dict() for state in storage.all(State).values()]
     return jsonify(states)
@@ -20,7 +20,7 @@ def get_states():
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     """
-    Retrieves a state object by ID
+    Retrieves a State object by ID.
     """
     state = storage.get(State, state_id)
     if not state:
@@ -31,7 +31,7 @@ def get_state(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """
-    Delete a state object by ID
+    Deletes a State object by ID.
     """
     state = storage.get(State, state_id)
     if not state:
@@ -44,7 +44,7 @@ def delete_state(state_id):
 @app_views.route('/states', methods=['POST'])
 def create_state():
     """
-    Creates a new state object.
+    Creates a new State object.
     """
     if not request.is_json:
         abort(400, 'Not a JSON')
@@ -60,7 +60,7 @@ def create_state():
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """
-    Updates a state object by ID.
+    Updates a State object by ID.
     """
     state = storage.get(State, state_id)
     if not state:
