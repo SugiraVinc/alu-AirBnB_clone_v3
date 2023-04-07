@@ -5,7 +5,9 @@ Creates a new state object that handles all RESTful API
 """
 from flask import jsonify, request, abort
 from api.v1.views import app_views
-from models import storage, State
+from models import storage
+from models.state import State
+from flask import jsonfiy, abort
 
 
 @app_views.route('/states', methods=['GET'])
