@@ -2,6 +2,7 @@
 """
 This module defines a Flask application that serves a RESTful API
 """
+import os
 from flask import Flask
 from api.v1.views import app_views
 from models import storage 
