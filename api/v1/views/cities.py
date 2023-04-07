@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """This module handles all default RESTful API actions for City objects."""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
