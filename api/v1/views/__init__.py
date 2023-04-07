@@ -14,3 +14,15 @@ from api.v1.views.places import *
 from api.v1.views.cities import *
 from api.v1.views.users import *
 from api.v1.views.places_reviews import *
+from api.v1.views.places_amenities import *
+
+if getenv('HBNB_ENV') == 'test':
+    app.config['TESTING'] = True
+
+if getenv('HBNB_STORAGE') == 'db':
+    storage_t = 'db'
+else:
+    storage_t = 'fs'
+
+@app.teardown_appcontext
+def close
